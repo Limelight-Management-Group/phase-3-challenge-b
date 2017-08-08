@@ -52,13 +52,13 @@ const query = {
 		`,[transactions.date_of_purchase]
 		)
 	},
-	lastShopperName(shopper){
-		db.one(`
-		SELECT MAX(shopperName) as name
-		FROM groceryItems
-		`)
-		.catch('error')
-	},
+	// lastShopperName(shopper){
+	// 	db.one(`
+	// 	SELECT MAX(shopperName) as name
+	// 	FROM groceryItems
+	// 	`)
+	// 	.catch('error')
+	// },
 	orderTotal(transactionId){
 		console.log(transactionId)
 		db.one(`
