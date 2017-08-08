@@ -1,25 +1,25 @@
 const pgp = require('pg-promise')();
 
-const connectionString = process.env.DATABASE_URL || 'postgres://localhost:5432/phase_3_challenge_b';
+const connectionString = process.env.DATABASE_URL || 'postgres://localhost:5432/grocery_store';
 const db = pgp(connectionString);
 
 const query = {
 	getAll(){
-		return db.any('SELECT * FROM groceryItems')
+		return db.any('SELECT * FROM groceryitems')
 	},
 	createTransaction(transaction){
 		console.log('this is the transaction', transaction)
 		return db.any(`
-			INSERT INTO groceryItems(name, price, section, name2, price2, section2, name3, price3, section3, date_of_purchase)
-			VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
-			`, [transaction.name, transaction.price, transaction.section, transaction.name2, transaction.price2, transaction.section2, transaction.name3, transaction.price3, transaction.section3, transaction.date_of_purchase])	
+			INSERT INTO groceryitems(name, price, section)
+			VALUES($1, $2, $3)
+			`, [transaction.name, transaction.price, transaction.section])	
 			.catch(console.log)
 	},
 	itemsInSection(section){
 		console.log('this is the result of my section query', section)
 		let result = db.any(`
 			SELECT name, id
-			FROM groceryItems
+			FROM groceryitems
 			where section =$1
 			`, [section.section]);
 		console.log(result)
@@ -28,7 +28,7 @@ const query = {
 	cheapItems(transactions){
 		db.any(`
 			SELECT price, id
-			FROM groceryItems
+			FROM groceryitems
 			WHERE price =< $1
 			ORDER BY price DESC
 			`, [transactions.price])
@@ -37,7 +37,7 @@ const query = {
 	countItemsInSection(section){
 		db.any(`
 			SELECT name, COUNT(section)
-			FROM groceryItems
+			FROM groceryitems
 			WHERE section = $1
 			GROUP BY name
 		`, [section.section])
@@ -46,7 +46,7 @@ const query = {
 	mostRecentOrders(transactions){
 		db.any(`
 		SELECT date_of_purchase, id
-		FROM groceryItems
+		FROM groceryitems
 		WHERE date_of_purchase >= $1
 		ORDER BY date_of_purchase DESC
 		`,[transactions.date_of_purchase]

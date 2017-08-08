@@ -16,8 +16,11 @@ app.use( bodyParser.urlencoded( {
 
 
 app.get('/', (req, res) =>{
-	query.
-	res.render('index')
+	query.getAll()
+	.then(transaction =>{
+		console.log('this is the getAll', transaction)
+		res.render('index')
+	})
 })
 
 app.post('/cart', (req, res) =>{
