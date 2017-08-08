@@ -95,7 +95,7 @@ Example Usage
 Note: The example output below is not exactly what you would see in reality. (Since the output would depend on the seed data that you add to your database) Use the output below as a template for how each command should display the data.
 
 List all products from a section
-
+```
 $ ./store product-list dairy
 |--------------+---------+
 | Product Name | Section |
@@ -127,8 +127,8 @@ $ ./store real-shoppers
 | Mary         |                2 |
 | Justin       |                2 |
 |--------------+------------------|
+```
 Requirements
-
  10: All files are stored under the part-2/ folder
  10: Database schema (all CREATE TABLE statements) is defined in a file schema.sql
  10: SQL script to insert grocery seed data and load from CSV is created in a file load-data.sql
