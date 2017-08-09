@@ -3,8 +3,6 @@ CREATE DATABASE grocery_store;
 
 \c grocery_store
 
-
-
 DROP TABLE IF EXISTS groceryitems;
 CREATE TABLE groceryitems(
 id SERIAL PRIMARY KEY UNIQUE,

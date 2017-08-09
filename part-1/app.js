@@ -33,9 +33,41 @@ app.get('/api/days/:day', (req, res)=>{
 		 	console.log('regieday', regieDay)
 		 if(regieDay == day){
 		 	daysArr.push(day)
-		 	res.statusCode = 200
-			console.log('this is the day', daysArr)
-			res.send('2')
+		 	console.log('this is the day i am looking at', day)
+		 	if(day == 'monday'){
+		 		res.statusCode = 200
+				console.log('this is the day', daysArr)
+				res.send('1') 		
+		 	}else if(day === 'tuesday'){
+				res.statusCode = 200
+				console.log('this is the day', daysArr)
+				res.send('2')
+			}else if(day === 'wednesday'){
+				res.statusCode = 200
+				console.log('this is the day', daysArr)
+				res.send('3')
+			}else if(day == 'thursday'){
+				res.statusCode = 200
+				console.log('this is the day', daysArr)
+				res.send('4')
+			}else if(day == 'friday'){
+				res.statusCode = 200
+				console.log('this is the day', daysArr)
+				res.send('5')
+			}else if(day == 'saturday'){
+				res.statusCode = 200
+				console.log('this is the day', daysArr)
+				res.send('6')
+			}else if(day == 'sunday'){
+				res.statusCode = 200
+				console.log('this is the day', daysArr)
+				res.send('7')
+			} else if (regieday !== 'holiday'){
+				console.log(regieday, 'compared to holiday')
+				res.statusCode = 400
+				res.send(`'holiday' is not a valid day!`)
+				// res.redirect('404')
+			}
 		}
 		}
 		console.log(daysArr)
