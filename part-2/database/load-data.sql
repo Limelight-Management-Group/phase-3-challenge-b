@@ -11,11 +11,6 @@ price NUMERIC(3,2),
 section TEXT
 );
 
-DROP TABLE IF EXISTS orders;
-CREATE TABLE orders(
-id SERIAL PRIMARY KEY,
-date_of_purchase DATE
-);
 
 DROP TABLE IF EXISTS shoppers;
 CREATE TABLE shoppers(
@@ -23,14 +18,25 @@ id SERIAL PRIMARY KEY,
 shopperName VARCHAR(30)
 );
 
-DROP TABLE IF EXISTS shoppersOrders;
-CREATE TABLE shoppersOrders(
+DROP TABLE IF EXISTS orders;
+CREATE TABLE orders(
 id SERIAL PRIMARY KEY,
-Orderid INTEGER,
-FOREIGN KEY (Orderid) REFERENCES orders(id),
+date_of_purchase DATE,
 groceryId INTEGER, 
-FOREIGN KEY (groceryId) REFERENCES groceryitems(id)
-)
+FOREIGN KEY (groceryId) REFERENCES groceryitems(id),
+shopperId INTEGER,
+FOREIGN KEY (shopperId) REFERENCES shoppers(id)
+);
+
+DROP TABLE IF EXISTS groceryOrders;
+CREATE TABLE groceryOrders(
+id SERIAL PRIMARY KEY,
+orderId INTEGER,
+FOREIGN KEY (orderId) REFERENCES orders(id)
+);
+
+
+
 /*
 
 \copy grocery_items(name, price, section) FROM './grocery.csv' DELIMITER ',' CSV HEADER;

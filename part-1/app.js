@@ -66,7 +66,7 @@ app.get('/api/days/:day', (req, res)=>{
 				console.log(regieday, 'compared to holiday')
 				res.statusCode = 400
 				res.send(`'holiday' is not a valid day!`)
-				// res.redirect('404')
+				res.redirect('404')
 			}
 		}
 	}
