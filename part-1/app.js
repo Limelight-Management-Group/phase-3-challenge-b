@@ -31,7 +31,7 @@ app.get('/api/days/:day', (req, res)=>{
 		// console.log('these are the params', day)
 		 	console.log('day',day)
 		 	console.log('regieday', regieDay)
-		 if(regieDay == day){
+		if(regieDay == day){
 		 	daysArr.push(day)
 		 	console.log('this is the day i am looking at', day)
 		 	if(day == 'monday'){
@@ -62,23 +62,41 @@ app.get('/api/days/:day', (req, res)=>{
 				res.statusCode = 200
 				console.log('this is the day', daysArr)
 				res.send('7')
-			} else if (regieday !== 'holiday'){
+			} else if (regieday == 'holiday'){
 				console.log(regieday, 'compared to holiday')
 				res.statusCode = 400
 				res.send(`'holiday' is not a valid day!`)
 				// res.redirect('404')
 			}
 		}
-		}
+	}
 		console.log(daysArr)
-
-	// 	else if(req.day !== day.tuesday){
-	// 		res.render('index')
-		
-		
-	// }
 })
+/*
 
+request: POST /api/array/concat
+request body params: {"array1": [1,3],
+                      "array2": [5,6]}
+request content type: application/json
+response: {"result": [1,3,5,6]}
+response content type: application/json
+
+*/
+// Array.isArray([1, 2, 3]);  // true
+
+app.post( '/api/array/concat', (req,res)=>{
+  var params = req.body
+
+  if ( !Array.isArray( JSON.parse(params.array1) ) || !Array.isArray( JSON.parse(params.array2) )) {
+    res.send(400).json({"error": "Input data should be of type Array."})
+  } else {
+    var array1 = JSON.parse(params.array1)
+    var array2 = JSON.parse(params.array2)
+    let result = array1.concat(array2)
+    res.set('Content-Type', 'application/json')
+    res.send(result)
+  }
+})
 
 
 let port = process.env.PORT || 3005
