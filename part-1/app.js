@@ -25,24 +25,26 @@ let daysOfWeek = {monday: 1, tuesday:2, wednesday: 3, thursday: 4, friday: 5, sa
 // })
 let daysArr = []
 app.get('/api/days/:day', (req, res)=>{
+	const regie = /\:/g
+	let regieDay = req.params.day.replace(regie, '')
 	for(day in daysOfWeek){
 		// console.log('these are the params', day)
-		 	console.log(day)
-		 	const regie = /\:/g
-		 let regieDay = req.params.day.replace(regie, ' ')
-		 	console.log(regieDay)
-		 if(regieDay === day){
+		 	console.log('day',day)
+		 	console.log('regieday', regieDay)
+		 if(regieDay == day){
 		 	daysArr.push(day)
-		 	// res.statusCode = 200
+		 	res.statusCode = 200
 			console.log('this is the day', daysArr)
 			res.send('2')
 		}
-		else if(req.day !== day.tuesday){
-			res.render('index')
 		}
+		console.log(daysArr)
+
+	// 	else if(req.day !== day.tuesday){
+	// 		res.render('index')
 		
 		
-	}
+	// }
 })
 
 
