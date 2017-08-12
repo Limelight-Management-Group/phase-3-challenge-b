@@ -5,12 +5,12 @@ const db = pgp(connectionString);
 
 const query = {
 	getAll(){
-		return db.any('SELECT * FROM groceryitems')
+		return db.any('SELECT * FROM grocery_items')
 	},
 	createTransaction(transaction){
 		console.log('this is the transaction', transaction)
 		return db.any(`
-			INSERT INTO groceryitems(name, price, section)
+			INSERT INTO grocery_items(name, price, section)
 			VALUES($1, $2, $3)
 			`, [transaction.name, transaction.price, transaction.section])	
 			.catch(console.log)
@@ -19,7 +19,7 @@ const query = {
 		console.log('this is the result of my section query', section)
 		let result = db.any(`
 			SELECT name, id
-			FROM groceryitems
+			FROM grocery_items
 			where section =$1
 			`, [section.section]);
 		console.log(result)
@@ -28,7 +28,7 @@ const query = {
 	cheapItems(transactions){
 		db.any(`
 			SELECT price, id
-			FROM groceryitems
+			FROM grocery_items
 			WHERE price =< $1
 			ORDER BY price DESC
 			`, [transactions.price])
@@ -37,7 +37,7 @@ const query = {
 	countItemsInSection(section){
 		db.any(`
 			SELECT name, COUNT(section)
-			FROM groceryitems
+			FROM grocery_items
 			WHERE section = $1
 			GROUP BY name
 		`, [section.section])
@@ -46,7 +46,7 @@ const query = {
 	mostRecentOrders(transactions){
 		db.any(`
 		SELECT date_of_purchase, id
-		FROM groceryitems
+		FROM grocery_items
 		WHERE date_of_purchase >= $1
 		ORDER BY date_of_purchase DESC
 		`,[transactions.date_of_purchase]
@@ -56,7 +56,7 @@ const query = {
 		console.log(transactionId)
 		db.one(`
 			SELECT *
-			FROM groceryItems
+			FROM grocery_items
 			WHERE transactionID = $1
 		`,[transactionId.transactionID])
 		.catch('error')
