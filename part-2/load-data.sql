@@ -42,16 +42,16 @@
 
 
 \copy grocery_items(name, price, section) FROM './grocery.csv' DELIMITER ',' CSV HEADER;
-INSERT INTO shoppers (fname, lname, email)
-    VALUES ('John', 'Doe', 'John@doe.com');
-INSERT INTO shoppers (fname, lname, email)
-    VALUES ('Jon', 'Dough', 'john@dough.com');
-INSERT INTO shoppers (fname, lname, email)
-    VALUES ('Jane', 'Doe', 'jane@jane.com');
-INSERT INTO shoppers (fname, lname, email)
-    VALUES ('Jain', 'Dough', 'Jain@dough.com');
-INSERT INTO shoppers (fname, lname, email)
-    VALUES ('person', 'family', 'random@email.com');
+INSERT INTO shoppers (fname, lname, email, number_of_orders)
+    VALUES ('John', 'Doe', 'John@doe.com', 5);
+INSERT INTO shoppers (fname, lname, email, number_of_orders)
+    VALUES ('Jon', 'Dough', 'john@dough.com', 5);
+INSERT INTO shoppers (fname, lname, email, number_of_orders)
+    VALUES ('Jane', 'Doe', 'jane@jane.com', 5);
+INSERT INTO shoppers (fname, lname, email, number_of_orders)
+    VALUES ('Jain', 'Dough', 'Jain@dough.com', 1);
+INSERT INTO shoppers (fname, lname, email, number_of_orders)
+    VALUES ('person', 'family', 'random@email.com', 5);
 
 INSERT INTO orders (shopper_id)
     VALUES (1);

@@ -14,7 +14,7 @@ const query = {
 			VALUES($1, $2, $3)
 			`, [transaction.name, transaction.price, transaction.section])	
 			.catch(console.log)
-	},
+	}, 	
 	itemsInSection(section){
 		console.log('this is the result of my section query', section)
 		let result = db.any(`
@@ -25,43 +25,40 @@ const query = {
 		console.log(result)
 		return result
 	},
-	cheapItems(transactions){
-		db.any(`
-			SELECT price, id
-			FROM grocery_items
-			WHERE price =< $1
-			ORDER BY price DESC
-			`, [transactions.price])
-		.catch('error')
+	// List all the shoppers that have at least 1 order, and also display the number of orders for them
+	getShopperOrders(shopperId){
+		// console.log('this is the shopperId', shopperId)
+		  return db.any(`
+	SELECT orders.id AS order_id, SUM(grocery_items.price) AS total_cost FROM orders
+    JOIN cart
+    ON orders.id = cart.id
+    JOIN grocery_items
+    ON cart.item_id = grocery_items.id
+    JOIN shoppers
+    ON shoppers.id = orders.shopper_id
+    WHERE shoppers.id = $1
+    GROUP BY orders.id
+  	`,[shopperId]);
+},
+// lists the names of all shoppers who have at least 1 order
+	getRealShopper(){
+	   		  return db.many(`
+			    SELECT DISTINCT(shoppers.fname), shoppers.number_of_orders 
+			    FROM shoppers JOIN orders ON shoppers.id = orders.shopper_id;
+			  ` );
+
 	},
-	countItemsInSection(section){
-		db.any(`
-			SELECT name, COUNT(section)
-			FROM grocery_items
-			WHERE section = $1
-			GROUP BY name
-		`, [section.section])
-		.catch('error')
-	},
-	mostRecentOrders(transactions){
-		db.any(`
-		SELECT date_of_purchase, id
-		FROM grocery_items
-		WHERE date_of_purchase >= $1
-		ORDER BY date_of_purchase DESC
-		`,[transactions.date_of_purchase]
-		)
-	},
-	orderTotal(transactionId){
-		console.log(transactionId)
-		db.one(`
-			SELECT *
-			FROM grocery_items
-			WHERE transactionID = $1
-		`,[transactionId.transactionID])
-		.catch('error')
-	}
+  getProductList(productSection){
+    // --lists all products which belong to the given section
+    return db.any(`
+SELECT section, name as product_name
+FROM grocery_items
+WHERE section = $1
+    `,[productSection]);
+
+  }
 }
+
 /*
 real-shoppers = lists the names of all shoppers who have at least 1 order	
 shopper-orders = lists the orders for a given shopper

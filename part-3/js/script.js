@@ -29,6 +29,8 @@ clearButton.addEventListener('click', clearModal)
   	updateCount())
   	updateTotal()
   	console.log('this is the shopCart: ', shopCart)
+  	subtotal = 0;
+  	total.innerHTML = 0
   	//now show most recent cart totals!
   }
 

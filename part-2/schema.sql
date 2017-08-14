@@ -14,7 +14,8 @@ CREATE TABLE IF NOT EXISTS shoppers(
   id SERIAL PRIMARY KEY,
   fname VARCHAR(140),
   lname VARCHAR(140),
-  email VARCHAR(140));
+  email VARCHAR(140),
+  number_of_orders INTEGER);
 
 
 CREATE TABLE IF NOT EXISTS orders(
